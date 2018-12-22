@@ -35,14 +35,23 @@ public:
 	// These return references, so you can bind directly to a GUI library that
 	// supports variable binding
 	static string& getString(string key);
+	static string& getString(string key, string defaultValue);
 	static bool& getBool(string key);
+	static bool& getBool(string key, bool defaultValue);
 	static int& getInt(string key);
+	static int& getInt(string key, int defaultValue);
 	static float& getFloat(string key);
+	static float& getFloat(string key, float defaultValue);
 	static double& getDouble(string key);
+	static double& getDouble(string key, double defaultValue);
 	static ofVec2f& getVec2(string key);
+	static ofVec2f& getVec2(string key, ofVec2f defaultValue);
 	static ofVec3f& getVec3(string key);
+	static ofVec3f& getVec3(string key, ofVec3f defaultValue);
 	static ofVec4f& getVec4(string key);
+	static ofVec4f& getVec4(string key, ofVec4f defaultValue);
 	static ofColor& getColor(string key);
+	static ofColor& getColor(string key, ofColor defaultValue);
 	static ofxJSON getJson(string key);
 
 	// Use this to check if a key exists

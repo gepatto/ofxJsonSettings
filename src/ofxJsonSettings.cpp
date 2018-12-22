@@ -118,30 +118,96 @@ string ofxJsonSettings::getAsJsonString(){
 string& ofxJsonSettings::getString(string key) {
 	return get()._stringVal(key);
 }
+string& ofxJsonSettings::getString(string key, string defaultValue) {
+	if (!exists(key)) {
+		get().stringMap[key] = defaultValue;
+	}
+	return get()._stringVal(key);
+}
+
 bool& ofxJsonSettings::getBool(string key) {
+	return get()._boolVal(key);
+}
+bool& ofxJsonSettings::getBool(string key, bool defaultValue) {
+	if (!exists(key)) {
+		get().boolMap[key] = defaultValue;
+	}
 	return get()._boolVal(key);
 }
 int& ofxJsonSettings::getInt(string key) {
 	return get()._intVal(key);
 }
+
+int& ofxJsonSettings::getInt(string key, int defaultValue) {
+	if (!exists(key)) {
+		get().intMap[key] = defaultValue;
+	}
+	return get()._intVal(key);
+}
+
 float& ofxJsonSettings::getFloat(string key) {
+	return get()._floatVal(key);
+}
+float& ofxJsonSettings::getFloat(string key, float defaultValue) {
+	if (!exists(key)) {
+		get().floatMap[key] = defaultValue;
+	}
 	return get()._floatVal(key);
 }
 double& ofxJsonSettings::getDouble(string key) {
 	return get()._doubleVal(key);
 }
+double& ofxJsonSettings::getDouble(string key, double defaultValue) {
+	if (!exists(key)) {
+		get().doubleMap[key] = defaultValue;
+	}
+	return get()._doubleVal(key);
+}
+
 ofVec2f& ofxJsonSettings::getVec2(string key) {
 	return get()._vec2Val(key);
 }
+
+ofVec2f& ofxJsonSettings::getVec2(string key, ofVec2f defaultValue) {
+	if (!exists(key)) {
+		get().vec2Map[key] = defaultValue;
+	}
+	return get()._vec2Val(key);
+}
+
 ofVec3f& ofxJsonSettings::getVec3(string key) {
 	return get()._vec3Val(key);
 }
+
+ofVec3f& ofxJsonSettings::getVec3(string key, ofVec3f defaultValue) {
+	if (!exists(key)) {
+		get().vec3Map[key] = defaultValue;
+	}
+	return get()._vec3Val(key);
+}
+
 ofVec4f& ofxJsonSettings::getVec4(string key) {
 	return get()._vec4Val(key);
 }
+
+ofVec4f& ofxJsonSettings::getVec4(string key, ofVec4f defaultValue) {
+	if (!exists(key)) {
+		get().vec4Map[key] = defaultValue;
+	}
+	return get()._vec4Val(key);
+}
+
 ofColor& ofxJsonSettings::getColor(string key) {
 	return get()._colorVal(key);
 }
+
+ofColor& ofxJsonSettings::getColor(string key, ofColor defaultValue) {
+	if (!exists(key)) {
+		get().colorMap[key] = defaultValue;
+	}
+	return get()._colorVal(key);
+}
+
 ofxJSON ofxJsonSettings::getJson(string key) {
 	return get()._jsonVal(key);
 }
@@ -240,6 +306,8 @@ ofxJSON ofxJsonSettings::_jsonVal(string& key) {
 		return getNestedChild(jsonStore, key);
 	} else if (jsonStore.isMember(key)) {
 		return jsonStore[key];
+	}else{
+		return ofxJSON();
 	}
 }
 
@@ -453,6 +521,7 @@ bool ofxJsonSettings::_remove(string key) {
 			vec4Map.erase(key);
 			colorMap.erase(key);
 		}
+		return true;
 	} catch (const runtime_error& e) {
 		ofLogError("Settings") << "error for key: " << key << ": " << e.what();
 		return false;
