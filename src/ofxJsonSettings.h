@@ -50,6 +50,8 @@ public:
 	static ofVec3f& getVec3(string key, ofVec3f defaultValue);
 	static ofVec4f& getVec4(string key);
 	static ofVec4f& getVec4(string key, ofVec4f defaultValue);
+	static uint32_t getColorUInt32(string key);
+	static uint32_t getColorUInt32(string key, ofColor defaultValue);
 	static ofColor& getColor(string key);
 	static ofColor& getColor(string key, ofColor defaultValue);
 	static ofxJSON getJson(string key);

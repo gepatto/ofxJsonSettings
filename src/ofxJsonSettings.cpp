@@ -154,6 +154,7 @@ float& ofxJsonSettings::getFloat(string key, float defaultValue) {
 	}
 	return get()._floatVal(key);
 }
+
 double& ofxJsonSettings::getDouble(string key) {
 	return get()._doubleVal(key);
 }
@@ -206,6 +207,19 @@ ofColor& ofxJsonSettings::getColor(string key, ofColor defaultValue) {
 		get().colorMap[key] = defaultValue;
 	}
 	return get()._colorVal(key);
+}
+
+uint32_t ofxJsonSettings::getColorUInt32(string key) {
+	ofColor rgba =  get()._colorVal(key);
+	uint32_t argb = ((rgba.a&0x0ff)<<24)|((rgba.r&0x0ff)<<16)|((rgba.g&0x0ff)<<8)|(rgba.b&0x0ff);
+	return argb;
+}
+
+uint32_t ofxJsonSettings::getColorUInt32(string key, ofColor defaultValue) {
+	if (!exists(key)) {
+		get().colorMap[key] = defaultValue;
+	}
+	return getColorUInt32(key);
 }
 
 ofxJSON ofxJsonSettings::getJson(string key) {
@@ -478,10 +492,12 @@ ofColor ofxJsonSettings::_colorValFromJson(ofxJSON& data, string& key) {
 			c.r = getNestedChild(data, key)[0].asFloat();
 			c.g = getNestedChild(data, key)[1].asFloat();
 			c.b = getNestedChild(data, key)[2].asFloat();
+			c.a = getNestedChild(data, key)[3].asFloat();
 		} else if (data.isMember(key)) {
 			c.r = data[key][0].asFloat();
 			c.g = data[key][1].asFloat();
 			c.b = data[key][2].asFloat();
+			c.a = data[key][3].asFloat();
 		} else {
 			ofLogWarning("Settings") << "no setting found for: " << key;
 		}
