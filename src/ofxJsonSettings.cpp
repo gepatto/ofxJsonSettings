@@ -675,7 +675,7 @@ void ofxJsonSettings::cacheToJson(unordered_map<string,ofColor>& container, ofxJ
 		array.append(it.second.r);
 		array.append(it.second.g);
 		array.append(it.second.b);
-
+		array.append(it.second.a);
 		if (ofStringTimesInString(key, delimiter)) {
 			setNestedChild(data, key, array);
 		} else {
